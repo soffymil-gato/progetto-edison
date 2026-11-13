@@ -25,3 +25,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+.env.testing
+.env.e2e
+/test-results
+/playwright-report
+/blob-report

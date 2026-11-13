@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc --noEmit && vite build && vite build --ssr",
+        "build": "tsc --noEmit && vite build",
         "build:client": "vite build",
         "typecheck": "tsc --noEmit",
         "lint": "eslint resources/js tests/e2e",

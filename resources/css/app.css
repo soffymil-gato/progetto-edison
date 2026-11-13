@@ -1,9 +1,179 @@
+/*
+ * Progetto Edison — design system tokens.
+ * Single source of truth for colours, typography, radii, shadows and motion,
+ * shared by the public website, the customer area and the admin panel.
+ * Fonts are self-hosted (no third-party requests).
+ */
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/sora';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@source '../js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Typography */
+    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'Sora Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+    /* Brand blues: celeste → azzurro → blu elettrico → blu istituzionale → blu profondo */
+    --color-brand-50: #eef5ff;
+    --color-brand-100: #dceaff;
+    --color-brand-200: #b9d6ff;
+    --color-brand-300: #86b8ff;
+    --color-brand-400: #4f93ff;
+    --color-brand-500: #2a6fff;
+    --color-brand-600: #1656e0;
+    --color-brand-700: #1244b4;
+    --color-brand-800: #11398f;
+    --color-brand-900: #0d2a66;
+    --color-brand-950: #071a3d;
+    --color-ink: #040f26;
+
+    /* Energy accent (decorative only, never for small text) */
+    --color-spark-300: #8fe3ff;
+    --color-spark-400: #3cc8ff;
+    --color-spark-500: #12a8e8;
+
+    /* Semantic surfaces and text */
+    --color-canvas: #f4f7fb;
+    --color-surface: #ffffff;
+    --color-line: #e2e8f1;
+    --color-line-strong: #cbd5e3;
+    --color-fg: #0b1730;
+    --color-fg-muted: #4a5873;
+    --color-fg-subtle: #6b7891;
+
+    /* States */
+    --color-success-50: #ecfdf5;
+    --color-success-600: #0f7a52;
+    --color-success-700: #0b6343;
+    --color-warning-50: #fff8eb;
+    --color-warning-600: #a85f00;
+    --color-warning-700: #8a4d00;
+    --color-danger-50: #fff1f2;
+    --color-danger-600: #c62f3d;
+    --color-danger-700: #a3222f;
+
+    /* Radii */
+    --radius-control: 0.625rem;
+    --radius-card: 1rem;
+    --radius-panel: 1.5rem;
+
+    /* Shadows (tinted with the deep blue) */
+    --shadow-card: 0 1px 2px rgb(7 26 61 / 0.04), 0 6px 20px -8px rgb(7 26 61 / 0.1);
+    --shadow-elevated: 0 2px 4px rgb(7 26 61 / 0.05), 0 18px 48px -16px rgb(7 26 61 / 0.22);
+    --shadow-glow: 0 0 0 1px rgb(42 111 255 / 0.15), 0 12px 40px -12px rgb(42 111 255 / 0.45);
+
+    /* Motion */
+    --ease-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --animate-fade-up: fade-up 0.7s var(--ease-soft) both;
+    --animate-fade-in: fade-in 0.4s var(--ease-soft) both;
+    --animate-shimmer: shimmer 1.6s linear infinite;
+
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes shimmer {
+        from {
+            background-position: -200% 0;
+        }
+        to {
+            background-position: 200% 0;
+        }
+    }
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        @apply bg-canvas text-fg font-sans antialiased;
+        font-feature-settings: 'cv11', 'ss01';
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply font-display text-balance tracking-tight;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-brand-500);
+        outline-offset: 2px;
+    }
+
+    ::selection {
+        background: var(--color-brand-200);
+        color: var(--color-ink);
+    }
+}
+
+@layer components {
+    /* Content still to be supplied by Edison: always visible, never mistaken for real data. */
+    .placeholder-text {
+        @apply rounded-md border border-dashed border-warning-600/50 bg-warning-50 px-1.5 py-0.5 text-warning-700 not-italic;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+    }
+
+    .skeleton {
+        background: linear-gradient(90deg, var(--color-line) 0%, #eef2f8 50%, var(--color-line) 100%);
+        background-size: 200% 100%;
+        @apply animate-shimmer rounded-md;
+    }
+
+    .tabular {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* EnergyField visual (kept here: inline <style> elements are blocked by the CSP) */
+@keyframes ef-flow {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+@keyframes ef-breathe {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.9);
+        opacity: 0.25;
+    }
 }

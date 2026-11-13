@@ -1,0 +1,9 @@
+{
+    "printWidth": 120,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindStylesheet": "./resources/css/app.css",
+    "overrides": [{ "files": ["*.json", "*.yml"], "options": { "tabWidth": 2 } }]
+}
