@@ -38,6 +38,7 @@ Il database aziendale **non è stato analizzato né toccato**: manca ancora il m
 - i **44 testi** del sito in `resources/content/site.php` non sono sostituiti con i testi forniti da Edison;
 - le **impostazioni aziendali** non sono compilate dal gestionale (ragione sociale, sede, P.IVA, contatti, orari, sede e orari di ritiro, destinatario del modulo contatti);
 - il **logo ufficiale** non è configurato (`EDISON_LOGO_PATH`);
+- l'**indirizzo mittente delle email** non è configurato (`MAIL_FROM_ADDRESS`): senza, inviti e recupero password non partono;
 - le immagini delle categorie di prodotto non sono fornite: oggi sono illustrazioni astratte etichettate «Immagine da fornire»;
 - i testi di Privacy e Cookie Policy non sono validati dal titolare o dal consulente. L'elenco tecnico dei cookie è già reale e verificato.
 

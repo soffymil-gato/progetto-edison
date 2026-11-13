@@ -114,7 +114,7 @@ php artisan edison:portal-invite cliente@example.test --name="Nome" --customer-r
 |---|---|
 | `php artisan edison:create-super-admin` | Crea un Super Admin e gli invia l'invito di attivazione |
 | `php artisan edison:rbac-sync` | Crea i permessi registrati e i ruoli predefiniti mancanti (idempotente) |
-| `php artisan edison:release-check` | **Blocca il rilascio** finché restano testi segnaposto, dati aziendali mancanti o il logo ufficiale non è configurato |
+| `php artisan edison:release-check` | **Blocca il rilascio** finché restano testi segnaposto, dati aziendali mancanti, il logo ufficiale o il mittente email non sono configurati |
 | `php artisan edison:portal-invite` | Account cliente di prova (solo non produzione) |
 
 ## Test e qualità

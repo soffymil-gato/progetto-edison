@@ -25,7 +25,7 @@ it('passes the release check when content, settings and logo are complete', func
     $logo = 'brand/test-logo.svg';
     @mkdir(public_path('brand'));
     file_put_contents(public_path($logo), '<svg xmlns="http://www.w3.org/2000/svg"/>');
-    config(['edison.brand.logo_path' => $logo]);
+    config(['edison.brand.logo_path' => $logo, 'mail.from.address' => 'noreply@example.test']);
 
     $admin = $this->superAdmin();
     foreach (SettingsSchema::groups() as $group => $definition) {

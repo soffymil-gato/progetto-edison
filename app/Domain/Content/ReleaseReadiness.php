@@ -58,6 +58,15 @@ final class ReleaseReadiness
             'missing' => $logoOk ? [] : ['File del logo ufficiale (EDISON_LOGO_PATH)'],
         ];
 
+        $from = config('mail.from.address');
+        $fromOk = is_string($from) && filter_var($from, FILTER_VALIDATE_EMAIL) !== false;
+        $checks[] = [
+            'key' => 'mail.from',
+            'label' => 'Mittente delle email (inviti, recupero password)',
+            'ok' => $fromOk,
+            'missing' => $fromOk ? [] : ['Indirizzo mittente verificato (MAIL_FROM_ADDRESS)'],
+        ];
+
         return $checks;
     }
 

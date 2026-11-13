@@ -11,6 +11,7 @@ export const e2eEnv = {
     DB_DATABASE: process.env.E2E_DB_DATABASE ?? 'EdisonPortal_e2e',
     SESSION_SECURE_COOKIE: 'false',
     MAIL_MAILER: 'array',
+    MAIL_FROM_ADDRESS: 'noreply@example.test',
     QUEUE_CONNECTION: 'sync',
     CACHE_STORE: 'array',
 };
