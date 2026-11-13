@@ -20,6 +20,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         app(RbacSynchronizer::class)->sync();
+        // Backend tests do not depend on compiled frontend assets (CSP nonces keep working).
+        $this->withoutVite();
     }
 
     /** @param list<string> $permissions */
