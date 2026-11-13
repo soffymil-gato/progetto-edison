@@ -19,7 +19,10 @@ export default function ResetPassword({ token, email, passwordMinLength, urls }:
     };
 
     return (
-        <AuthLayout title="Imposta una nuova password" description="Scegli la nuova password del tuo account. Le sessioni aperte su altri dispositivi verranno chiuse.">
+        <AuthLayout
+            title="Imposta una nuova password"
+            description="Scegli la nuova password del tuo account. Le sessioni aperte su altri dispositivi verranno chiuse."
+        >
             <form onSubmit={submit} className="space-y-5" noValidate>
                 <Field label="Email" error={form.errors.email} required>
                     {(field) => (
@@ -36,7 +39,13 @@ export default function ResetPassword({ token, email, passwordMinLength, urls }:
                     )}
                 </Field>
                 <PasswordFields form={form} minLength={passwordMinLength} />
-                <Button type="submit" size="lg" className="w-full" loading={form.processing} icon={<KeyRound className="size-4" aria-hidden />}>
+                <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full"
+                    loading={form.processing}
+                    icon={<KeyRound className="size-4" aria-hidden />}
+                >
                     Salva la nuova password
                 </Button>
             </form>

@@ -79,6 +79,18 @@ return [
         'placeholder_marker' => '[DA FORNIRE',
     ],
 
+    /*
+    | Reverse proxies allowed to set X-Forwarded-* headers (TLS termination).
+    | Comma-separated IP addresses/CIDR, or "*" only when the application is
+    | reachable exclusively through the proxy. Empty = no proxy trusted.
+    */
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
+    // Password of the SYNTHETIC end-to-end test accounts (E2eSeeder, never in production).
+    'e2e' => [
+        'password' => env('E2E_PASSWORD'),
+    ],
+
     'retention' => [
         // Months after which contact requests are deleted. Null = not defined yet
         // (to be decided with the data controller / DPO): no automatic purge.

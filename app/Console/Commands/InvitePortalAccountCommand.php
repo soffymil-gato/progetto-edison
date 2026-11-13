@@ -45,7 +45,7 @@ final class InvitePortalAccountCommand extends Command
             'email' => ['required', 'email:rfc', 'max:254', 'unique:portal_accounts,email'],
             'display_name' => ['required', 'string', 'max:120'],
             'customer_ref' => ['required', 'string', 'max:64'],
-            'username' => ['nullable', 'string', 'max:64', 'alpha_dash', 'unique:portal_accounts,username'],
+            'username' => ['nullable', 'string', 'regex:/^[A-Za-z0-9._-]{3,64}$/', 'unique:portal_accounts,username'],
         ]);
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {

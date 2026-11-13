@@ -1,5 +1,5 @@
-import { router } from '@inertiajs/react';
-import { ArrowDown, ArrowUp, ChevronsUpDown } from 'lucide-react';
+import { Link, router } from '@inertiajs/react';
+import { ArrowDown, ArrowUp, ChevronRight, ChevronsUpDown } from 'lucide-react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import { cn } from '@/lib/cn';
@@ -45,7 +45,8 @@ export function DataTable<T>({
     onSort,
     empty,
     caption,
-    onRowClick,
+    rowHref,
+    rowLabel,
 }: {
     columns: Column<T>[];
     rows: T[];
@@ -54,7 +55,9 @@ export function DataTable<T>({
     onSort?: (sort: string) => void;
     empty: ReactNode;
     caption: string;
-    onRowClick?: (row: T) => void;
+    /** Detail page of the row: a real link (keyboard and screen readers), plus mouse click on the whole row. */
+    rowHref?: (row: T) => string;
+    rowLabel?: (row: T) => string;
 }) {
     const navigating = useNavigating();
 
@@ -70,24 +73,58 @@ export function DataTable<T>({
                     <thead>
                         <tr className="border-b border-line bg-canvas/60">
                             {columns.map((column) => (
-                                <th key={column.key} scope="col" className={cn('px-5 py-3 text-xs font-semibold tracking-wide text-fg-subtle uppercase', column.className)}>
-                                    {column.sort && onSort ? <SortButton column={column} sort={sort} onSort={onSort} /> : column.header}
+                                <th
+                                    key={column.key}
+                                    scope="col"
+                                    className={cn(
+                                        'px-5 py-3 text-xs font-semibold tracking-wide text-fg-subtle uppercase',
+                                        column.className,
+                                    )}
+                                >
+                                    {column.sort && onSort ? (
+                                        <SortButton column={column} sort={sort} onSort={onSort} />
+                                    ) : (
+                                        column.header
+                                    )}
                                 </th>
                             ))}
+                            {rowHref && (
+                                <th scope="col" className="w-12 px-3">
+                                    <span className="sr-only">Dettaglio</span>
+                                </th>
+                            )}
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-line">
                         {rows.map((row) => (
                             <tr
                                 key={rowKey(row)}
-                                onClick={onRowClick ? () => onRowClick(row) : undefined}
-                                className={cn('transition-colors', onRowClick && 'cursor-pointer hover:bg-brand-50/50')}
+                                onClick={rowHref ? () => router.visit(rowHref(row)) : undefined}
+                                className={cn(
+                                    'group transition-colors',
+                                    rowHref && 'cursor-pointer hover:bg-brand-50/50',
+                                )}
                             >
                                 {columns.map((column) => (
-                                    <td key={column.key} className={cn('px-5 py-3.5 align-middle text-fg', column.className)}>
+                                    <td
+                                        key={column.key}
+                                        className={cn('px-5 py-3.5 align-middle text-fg', column.className)}
+                                    >
                                         {column.cell(row)}
                                     </td>
                                 ))}
+                                {rowHref && (
+                                    <td className="px-3 text-right">
+                                        <Link
+                                            href={rowHref(row)}
+                                            onClick={(event) => event.stopPropagation()}
+                                            className="inline-flex size-8 items-center justify-center rounded-lg text-fg-subtle transition-colors group-hover:text-brand-700 hover:bg-brand-100"
+                                            aria-label={`Apri ${rowLabel ? rowLabel(row) : 'dettaglio'}`}
+                                        >
+                                            <ChevronRight className="size-4" aria-hidden />
+                                        </Link>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>
@@ -98,6 +135,16 @@ export function DataTable<T>({
             <ul className="divide-y divide-line md:hidden" aria-label={caption}>
                 {rows.map((row) => (
                     <li key={rowKey(row)} className="px-4 py-4">
+                        {rowHref && (
+                            <Link
+                                href={rowHref(row)}
+                                className="float-right ml-3 inline-flex h-9 items-center gap-1 rounded-lg border border-line px-3 text-sm font-medium text-brand-700 hover:bg-brand-50"
+                                aria-label={`Apri ${rowLabel ? rowLabel(row) : 'dettaglio'}`}
+                            >
+                                Apri
+                                <ChevronRight className="size-4" aria-hidden />
+                            </Link>
+                        )}
                         <dl className="grid grid-cols-[minmax(6.5rem,auto)_1fr] gap-x-3 gap-y-1.5 text-sm">
                             {columns
                                 .filter((column) => !column.hideOnMobile)

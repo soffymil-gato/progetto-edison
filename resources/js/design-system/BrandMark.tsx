@@ -13,7 +13,11 @@ export function BrandMark({ tone = 'dark', className }: { tone?: 'dark' | 'light
     }
 
     return (
-        <span className={cn('inline-flex items-center gap-2.5', className)} aria-label={`${appName} — logo ufficiale da fornire`}>
+        <span
+            role="img"
+            className={cn('inline-flex items-center gap-2.5', className)}
+            aria-label={`${appName} — logo ufficiale da fornire`}
+        >
             <span
                 className={cn(
                     'inline-flex h-8 items-center rounded-lg border border-dashed px-2 text-[0.625rem] font-semibold tracking-[0.16em] uppercase',
@@ -23,7 +27,13 @@ export function BrandMark({ tone = 'dark', className }: { tone?: 'dark' | 'light
             >
                 Logo
             </span>
-            <span className={cn('font-display text-lg font-semibold tracking-tight', tone === 'dark' ? 'text-ink' : 'text-white')} aria-hidden>
+            <span
+                className={cn(
+                    'font-display text-lg font-semibold tracking-tight',
+                    tone === 'dark' ? 'text-ink' : 'text-white',
+                )}
+                aria-hidden
+            >
                 {appName}
             </span>
         </span>

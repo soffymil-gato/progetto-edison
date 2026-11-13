@@ -14,7 +14,13 @@ export function EnergyField({ className }: { className?: string }) {
     ];
 
     return (
-        <svg className={cn('h-full w-full', className)} viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden focusable="false">
+        <svg
+            className={cn('h-full w-full', className)}
+            viewBox="0 0 1000 700"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden
+            focusable="false"
+        >
             <defs>
                 <radialGradient id="ef-glow" cx="78%" cy="18%" r="70%">
                     <stop offset="0%" stopColor="#2a6fff" stopOpacity="0.55" />
@@ -83,12 +89,19 @@ export function EnergyField({ className }: { className?: string }) {
                     [860, 238],
                 ].map(([x, y], i) => (
                     <g key={`n-${i}`} transform={`translate(${x} ${y})`}>
-                        <circle r="10" fill="#2a6fff" fillOpacity="0.18" style={{ animation: `ef-breathe 3.6s ease-in-out ${i * 0.6}s infinite`, transformOrigin: 'center' }} />
+                        <circle
+                            r="10"
+                            fill="#2a6fff"
+                            fillOpacity="0.18"
+                            style={{
+                                animation: `ef-breathe 3.6s ease-in-out ${i * 0.6}s infinite`,
+                                transformOrigin: 'center',
+                            }}
+                        />
                         <circle r="3" fill="#8fe3ff" />
                     </g>
                 ))}
             </g>
-
         </svg>
     );
 }

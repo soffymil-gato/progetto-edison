@@ -8,10 +8,21 @@ import { controlClasses, controlState } from './Field';
 type ControlProps = { invalid?: boolean };
 
 export function Input({ invalid = false, className, ...props }: ControlProps & ComponentProps<'input'>) {
-    return <input className={cn(controlClasses, controlState(invalid), 'h-11', className)} aria-invalid={invalid || undefined} {...props} />;
+    return (
+        <input
+            className={cn(controlClasses, controlState(invalid), 'h-11', className)}
+            aria-invalid={invalid || undefined}
+            {...props}
+        />
+    );
 }
 
-export function Textarea({ invalid = false, className, rows = 4, ...props }: ControlProps & ComponentProps<'textarea'>) {
+export function Textarea({
+    invalid = false,
+    className,
+    rows = 4,
+    ...props
+}: ControlProps & ComponentProps<'textarea'>) {
     return (
         <textarea
             rows={rows}
@@ -40,7 +51,11 @@ export function Select({ invalid = false, className, children, ...props }: Contr
 }
 
 /** Password input with show/hide toggle (accessible, keyboard operable). */
-export function PasswordInput({ invalid = false, className, ...props }: ControlProps & Omit<ComponentProps<'input'>, 'type'>) {
+export function PasswordInput({
+    invalid = false,
+    className,
+    ...props
+}: ControlProps & Omit<ComponentProps<'input'>, 'type'>) {
     const [visible, setVisible] = useState(false);
     return (
         <div className="relative">

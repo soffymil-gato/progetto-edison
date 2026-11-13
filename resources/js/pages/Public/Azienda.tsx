@@ -28,8 +28,13 @@ export default function Azienda({ seo, content }: Props) {
                     {content.sections.map((section, index) => (
                         <Reveal key={section.key} delay={(index % 2) * 90}>
                             <article className="relative border-t border-line pt-8">
-                                <span className="absolute -top-px left-0 h-0.5 w-14 bg-gradient-to-r from-brand-600 to-spark-400" aria-hidden />
-                                <p className="font-display text-sm font-semibold text-brand-500 tabular">{String(index + 1).padStart(2, '0')}</p>
+                                <span
+                                    className="absolute -top-px left-0 h-0.5 w-14 bg-gradient-to-r from-brand-600 to-spark-400"
+                                    aria-hidden
+                                />
+                                <p className="tabular font-display text-sm font-semibold text-brand-600" aria-hidden>
+                                    {String(index + 1).padStart(2, '0')}
+                                </p>
                                 <h2 className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">{section.title}</h2>
                                 <p className="mt-4 text-lg leading-relaxed text-fg-muted">
                                     <Txt value={section.text} />

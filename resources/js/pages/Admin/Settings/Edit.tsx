@@ -10,8 +10,22 @@ import { Input, Textarea } from '@/design-system/Input';
 import { PageHeader } from '@/design-system/PageHeader';
 import { AppShell } from '@/layouts/AppShell';
 
-type FieldDef = { name: string; label: string; type: 'text' | 'textarea' | 'email' | 'tel'; max: number; release: boolean; help?: string };
-type Group = { key: string; label: string; description: string; fields: FieldDef[]; values: Record<string, string | null>; submitUrl: string };
+type FieldDef = {
+    name: string;
+    label: string;
+    type: 'text' | 'textarea' | 'email' | 'tel';
+    max: number;
+    release: boolean;
+    help?: string;
+};
+type Group = {
+    key: string;
+    label: string;
+    description: string;
+    fields: FieldDef[];
+    values: Record<string, string | null>;
+    submitUrl: string;
+};
 
 export default function SettingsEdit({ groups }: { groups: Group[] }) {
     return (
@@ -41,7 +55,17 @@ function SettingsGroup({ group }: { group: Group }) {
 
     return (
         <Card id={group.key}>
-            <CardHeader title={group.label} description={group.description} actions={missing > 0 ? <Badge tone="warning">{missing} da completare</Badge> : <Badge tone="success">Completo</Badge>} />
+            <CardHeader
+                title={group.label}
+                description={group.description}
+                actions={
+                    missing > 0 ? (
+                        <Badge tone="warning">{missing} da completare</Badge>
+                    ) : (
+                        <Badge tone="success">Completo</Badge>
+                    )
+                }
+            />
             <CardBody>
                 <form onSubmit={submit} className="grid gap-5 md:grid-cols-2" noValidate>
                     {group.fields.map((def) => (
@@ -50,7 +74,11 @@ function SettingsGroup({ group }: { group: Group }) {
                             label={
                                 <span className="inline-flex flex-wrap items-center gap-2">
                                     {def.label}
-                                    {def.release && <span className="text-xs font-normal text-warning-700">Richiesto per il rilascio</span>}
+                                    {def.release && (
+                                        <span className="text-xs font-normal text-warning-700">
+                                            Richiesto per il rilascio
+                                        </span>
+                                    )}
                                 </span>
                             }
                             hint={def.help}
@@ -59,7 +87,15 @@ function SettingsGroup({ group }: { group: Group }) {
                         >
                             {(f) =>
                                 def.type === 'textarea' ? (
-                                    <Textarea id={f.id} aria-describedby={f.describedBy} invalid={f.invalid} rows={3} maxLength={def.max} value={form.data[def.name] ?? ''} onChange={(e) => form.setData(def.name, e.target.value)} />
+                                    <Textarea
+                                        id={f.id}
+                                        aria-describedby={f.describedBy}
+                                        invalid={f.invalid}
+                                        rows={3}
+                                        maxLength={def.max}
+                                        value={form.data[def.name] ?? ''}
+                                        onChange={(e) => form.setData(def.name, e.target.value)}
+                                    />
                                 ) : (
                                     <Input
                                         id={f.id}
@@ -77,7 +113,12 @@ function SettingsGroup({ group }: { group: Group }) {
                     ))}
                     <div className="flex items-center justify-end gap-3 border-t border-line pt-5 md:col-span-2">
                         {form.isDirty && <span className="text-sm text-fg-muted">Modifiche non salvate</span>}
-                        <Button type="submit" loading={form.processing} disabled={!form.isDirty} icon={<Save className="size-4" aria-hidden />}>
+                        <Button
+                            type="submit"
+                            loading={form.processing}
+                            disabled={!form.isDirty}
+                            icon={<Save className="size-4" aria-hidden />}
+                        >
                             Salva
                         </Button>
                     </div>

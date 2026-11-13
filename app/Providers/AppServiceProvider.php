@@ -8,6 +8,7 @@ use App\Domain\Content\SiteContent;
 use App\Domain\Identity\Models\StaffUser;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,6 +23,11 @@ final class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $proxies = config('edison.trusted_proxies');
+        if (is_string($proxies) && $proxies !== '') {
+            TrustProxies::at($proxies === '*' ? '*' : array_map('trim', explode(',', $proxies)));
+        }
+
         // Fail loudly on lazy loading, silently discarded attributes and missing attributes.
         Model::shouldBeStrict(! $this->app->isProduction());
 

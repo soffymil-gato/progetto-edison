@@ -31,12 +31,19 @@ export default function Profile({ account, passwordMinLength, urls }: Props) {
 
     const submit = (event: FormEvent) => {
         event.preventDefault();
-        form.put(urls.password, { preserveScroll: true, onSuccess: () => form.reset(), onError: () => form.reset('current_password') });
+        form.put(urls.password, {
+            preserveScroll: true,
+            onSuccess: () => form.reset(),
+            onError: () => form.reset('current_password'),
+        });
     };
 
     return (
         <AppShell title="Profilo e sicurezza">
-            <PageHeader title="Profilo e sicurezza" description="I tuoi dati di accesso e la gestione della password." />
+            <PageHeader
+                title="Profilo e sicurezza"
+                description="I tuoi dati di accesso e la gestione della password."
+            />
             <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
                 <Card>
                     <CardHeader title="Account" />
@@ -70,7 +77,10 @@ export default function Profile({ account, passwordMinLength, urls }: Props) {
                 </Card>
 
                 <Card>
-                    <CardHeader title="Cambia password" description="Alla conferma le altre sessioni aperte verranno chiuse." />
+                    <CardHeader
+                        title="Cambia password"
+                        description="Alla conferma le altre sessioni aperte verranno chiuse."
+                    />
                     <CardBody>
                         <form onSubmit={submit} className="space-y-5" noValidate>
                             <Field label="Password attuale" error={form.errors.current_password} required>
@@ -87,7 +97,11 @@ export default function Profile({ account, passwordMinLength, urls }: Props) {
                                 )}
                             </Field>
                             <PasswordFields form={form} minLength={passwordMinLength} />
-                            <Button type="submit" loading={form.processing} icon={<KeyRound className="size-4" aria-hidden />}>
+                            <Button
+                                type="submit"
+                                loading={form.processing}
+                                icon={<KeyRound className="size-4" aria-hidden />}
+                            >
                                 Aggiorna la password
                             </Button>
                         </form>

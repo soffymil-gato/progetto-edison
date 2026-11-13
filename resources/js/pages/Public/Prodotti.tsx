@@ -9,7 +9,12 @@ import { useShared } from '@/lib/useShared';
 
 type Props = {
     seo: Seo;
-    content: { title: string; intro: string; categories: { name: string; description: string }[]; catalog_note: string };
+    content: {
+        title: string;
+        intro: string;
+        categories: { name: string; description: string }[];
+        catalog_note: string;
+    };
 };
 
 export default function Prodotti({ seo, content }: Props) {
@@ -45,7 +50,10 @@ export default function Prodotti({ seo, content }: Props) {
                             </span>
                             <p className="max-w-2xl text-lg leading-relaxed text-brand-950">{content.catalog_note}</p>
                         </div>
-                        <a href={urls.portalLogin} className="inline-flex h-11 shrink-0 items-center rounded-control bg-brand-600 px-5 font-medium text-white hover:bg-brand-700">
+                        <a
+                            href={urls.portalLogin}
+                            className="inline-flex h-11 shrink-0 items-center rounded-control bg-brand-600 px-5 font-medium text-white hover:bg-brand-700"
+                        >
                             Area clienti
                         </a>
                     </div>

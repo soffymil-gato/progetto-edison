@@ -1,6 +1,7 @@
 import '../../css/app.css';
 
 import { createInertiaApp } from '@inertiajs/react';
+import { setNonce } from 'get-nonce';
 import type { ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -12,6 +13,8 @@ type PageModules = Record<string, () => Promise<unknown>>;
  */
 export function startArea({ pages, xsrfCookie }: { pages: PageModules; xsrfCookie: string }): void {
     const nonce = document.querySelector<HTMLMetaElement>('meta[name="csp-nonce"]')?.content;
+    // UI primitives (scroll lock of dialogs) inject <style> elements: they must carry the CSP nonce.
+    if (nonce) setNonce(nonce);
 
     void createInertiaApp({
         title: (title) => title,

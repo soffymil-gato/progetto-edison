@@ -43,7 +43,10 @@ function AdminFrame({ children }: { children: ReactNode }) {
                     <Dialog.Overlay className="fixed inset-0 z-50 animate-fade-in bg-ink/50 backdrop-blur-sm lg:hidden" />
                     <Dialog.Content className="fixed inset-y-0 left-0 z-50 flex w-[min(18rem,85%)] animate-fade-in flex-col bg-brand-950 shadow-elevated lg:hidden">
                         <Dialog.Title className="sr-only">Menu del gestionale</Dialog.Title>
-                        <Dialog.Close className="absolute top-4 right-3 inline-flex size-10 items-center justify-center rounded-lg text-white/70 hover:bg-white/10" aria-label="Chiudi il menu">
+                        <Dialog.Close
+                            className="absolute top-4 right-3 inline-flex size-10 items-center justify-center rounded-lg text-white/70 hover:bg-white/10"
+                            aria-label="Chiudi il menu"
+                        >
                             <X className="size-5" aria-hidden />
                         </Dialog.Close>
                         <SidebarContent items={nav} route={route} onNavigate={() => setOpen(false)} />
@@ -74,14 +77,24 @@ function AdminFrame({ children }: { children: ReactNode }) {
     );
 }
 
-function SidebarContent({ items, route, onNavigate }: { items: NavItem[]; route: string | null; onNavigate?: () => void }) {
+function SidebarContent({
+    items,
+    route,
+    onNavigate,
+}: {
+    items: NavItem[];
+    route: string | null;
+    onNavigate?: () => void;
+}) {
     const { urls } = useShared();
     return (
         <>
             <div className="flex h-16 items-center px-5">
                 <BrandMark tone="light" />
             </div>
-            <p className="px-5 pt-2 pb-3 text-[0.6875rem] font-semibold tracking-[0.18em] text-white/40 uppercase">Gestionale</p>
+            <p className="px-5 pt-2 pb-3 text-[0.6875rem] font-semibold tracking-[0.18em] text-white/60 uppercase">
+                Gestionale
+            </p>
             <nav aria-label="Menu del gestionale" className="flex-1 overflow-y-auto px-3">
                 <ul className="flex flex-col gap-0.5">
                     {items.map((item) => {
@@ -94,11 +107,24 @@ function SidebarContent({ items, route, onNavigate }: { items: NavItem[]; route:
                                     aria-current={active ? 'page' : undefined}
                                     className={cn(
                                         'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
-                                        active ? 'bg-white/10 text-white' : 'text-white/65 hover:bg-white/5 hover:text-white',
+                                        active
+                                            ? 'bg-white/10 text-white'
+                                            : 'text-white/65 hover:bg-white/5 hover:text-white',
                                     )}
                                 >
-                                    {active && <span className="absolute top-2 bottom-2 -left-3 w-1 rounded-r-full bg-spark-400" aria-hidden />}
-                                    <NavIcon name={item.icon} className={cn('size-[1.125rem]', active ? 'text-spark-300' : 'text-white/45 group-hover:text-white/80')} />
+                                    {active && (
+                                        <span
+                                            className="absolute top-2 bottom-2 -left-3 w-1 rounded-r-full bg-spark-400"
+                                            aria-hidden
+                                        />
+                                    )}
+                                    <NavIcon
+                                        name={item.icon}
+                                        className={cn(
+                                            'size-[1.125rem]',
+                                            active ? 'text-spark-300' : 'text-white/45 group-hover:text-white/80',
+                                        )}
+                                    />
                                     {item.label}
                                 </Link>
                             </li>
@@ -107,7 +133,10 @@ function SidebarContent({ items, route, onNavigate }: { items: NavItem[]; route:
                 </ul>
             </nav>
             <div className="border-t border-white/10 p-3">
-                <a href={urls.publicHome} className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-white/55 hover:bg-white/5 hover:text-white">
+                <a
+                    href={urls.publicHome}
+                    className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-white/55 hover:bg-white/5 hover:text-white"
+                >
                     <ExternalLink className="size-4" aria-hidden />
                     Vai al sito pubblico
                 </a>
@@ -138,7 +167,9 @@ function PortalFrame({ children }: { children: ReactNode }) {
                                             aria-current={active ? 'page' : undefined}
                                             className={cn(
                                                 'inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium transition-colors',
-                                                active ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-100' : 'text-fg-muted hover:bg-canvas hover:text-fg',
+                                                active
+                                                    ? 'bg-brand-50 text-brand-800 ring-1 ring-brand-100'
+                                                    : 'text-fg-muted hover:bg-canvas hover:text-fg',
                                             )}
                                         >
                                             <NavIcon name={item.icon} className="size-4" />
@@ -164,7 +195,11 @@ function PortalFrame({ children }: { children: ReactNode }) {
                     </div>
                 </div>
                 {open && (
-                    <nav id="portal-mobile-nav" aria-label="Menu dell'area clienti" className="border-t border-line px-4 py-3 md:hidden">
+                    <nav
+                        id="portal-mobile-nav"
+                        aria-label="Menu dell'area clienti"
+                        className="border-t border-line px-4 py-3 md:hidden"
+                    >
                         <ul className="flex flex-col gap-1">
                             {nav.map((item) => (
                                 <li key={item.href}>
@@ -174,7 +209,9 @@ function PortalFrame({ children }: { children: ReactNode }) {
                                         aria-current={routeMatches(route, item.match) ? 'page' : undefined}
                                         className={cn(
                                             'flex items-center gap-3 rounded-xl px-3 py-3 text-[0.9375rem] font-medium',
-                                            routeMatches(route, item.match) ? 'bg-brand-50 text-brand-800' : 'text-fg hover:bg-canvas',
+                                            routeMatches(route, item.match)
+                                                ? 'bg-brand-50 text-brand-800'
+                                                : 'text-fg hover:bg-canvas',
                                         )}
                                     >
                                         <NavIcon name={item.icon} className="size-4.5" />
@@ -206,7 +243,10 @@ function UserMenu() {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger className="inline-flex items-center gap-2.5 rounded-full py-1 pr-2 pl-1 transition-colors hover:bg-brand-50 data-[state=open]:bg-brand-50">
-                <span className="inline-flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-brand-800 text-xs font-semibold text-white" aria-hidden>
+                <span
+                    className="inline-flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-brand-800 text-xs font-semibold text-white"
+                    aria-hidden
+                >
                     {initials}
                 </span>
                 <span className="hidden max-w-40 truncate text-sm font-medium text-fg sm:block">{user.name}</span>
@@ -214,7 +254,11 @@ function UserMenu() {
                 <span className="sr-only">Menu utente</span>
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
-                <DropdownMenu.Content align="end" sideOffset={8} className="z-50 w-64 animate-fade-in rounded-card border border-line bg-surface p-1.5 shadow-elevated">
+                <DropdownMenu.Content
+                    align="end"
+                    sideOffset={8}
+                    className="z-50 w-64 animate-fade-in rounded-card border border-line bg-surface p-1.5 shadow-elevated"
+                >
                     <div className="px-3 py-2.5">
                         <p className="truncate text-sm font-semibold text-fg">{user.name}</p>
                         <p className="truncate text-xs text-fg-muted">{user.email}</p>
@@ -222,7 +266,10 @@ function UserMenu() {
                     </div>
                     <DropdownMenu.Separator className="my-1 h-px bg-line" />
                     <DropdownMenu.Item asChild>
-                        <Link href={urls.profile ?? '#'} className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-fg outline-none data-[highlighted]:bg-brand-50">
+                        <Link
+                            href={urls.profile ?? '#'}
+                            className="flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-fg outline-none data-[highlighted]:bg-brand-50"
+                        >
                             <UserCog className="size-4 text-fg-subtle" aria-hidden />
                             Profilo e sicurezza
                         </Link>

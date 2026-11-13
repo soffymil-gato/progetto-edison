@@ -48,13 +48,19 @@ export default function ContactRequestShow({ request, can, urls }: Props) {
                 eyebrow={`Richiesta #${request.id}`}
                 title={request.subject}
                 description={`Ricevuta il ${formatDateTime(request.createdAt)}`}
-                actions={<Badge tone={request.status === 'new' ? 'warning' : 'success'} dot>{request.statusLabel}</Badge>}
+                actions={
+                    <Badge tone={request.status === 'new' ? 'warning' : 'success'} dot>
+                        {request.statusLabel}
+                    </Badge>
+                }
             />
             <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
                 <Card>
                     <CardHeader title="Messaggio" />
                     <CardBody>
-                        <p className="text-[0.9375rem] leading-relaxed whitespace-pre-line text-fg">{request.message}</p>
+                        <p className="text-[0.9375rem] leading-relaxed whitespace-pre-line text-fg">
+                            {request.message}
+                        </p>
                     </CardBody>
                 </Card>
                 <div className="flex flex-col gap-6">
@@ -68,7 +74,10 @@ export default function ContactRequestShow({ request, can, urls }: Props) {
                                     {
                                         term: 'Email',
                                         value: (
-                                            <a className="inline-flex items-center gap-1.5 font-medium text-brand-700 hover:underline" href={`mailto:${request.email}`}>
+                                            <a
+                                                className="inline-flex items-center gap-1.5 font-medium text-brand-700 hover:underline"
+                                                href={`mailto:${request.email}`}
+                                            >
                                                 <Mail className="size-3.5" aria-hidden />
                                                 {request.email}
                                             </a>
@@ -77,7 +86,10 @@ export default function ContactRequestShow({ request, can, urls }: Props) {
                                     {
                                         term: 'Telefono',
                                         value: request.phone ? (
-                                            <a className="inline-flex items-center gap-1.5 font-medium text-brand-700 hover:underline" href={`tel:${request.phone.replace(/\s+/g, '')}`}>
+                                            <a
+                                                className="inline-flex items-center gap-1.5 font-medium text-brand-700 hover:underline"
+                                                href={`tel:${request.phone.replace(/\s+/g, '')}`}
+                                            >
                                                 <Phone className="size-3.5" aria-hidden />
                                                 {request.phone}
                                             </a>
@@ -85,7 +97,10 @@ export default function ContactRequestShow({ request, can, urls }: Props) {
                                             '—'
                                         ),
                                     },
-                                    { term: 'Informativa privacy', value: `Presa visione il ${formatDateTime(request.privacyAcceptedAt)}` },
+                                    {
+                                        term: 'Informativa privacy',
+                                        value: `Presa visione il ${formatDateTime(request.privacyAcceptedAt)}`,
+                                    },
                                 ]}
                             />
                         </CardBody>
@@ -96,16 +111,39 @@ export default function ContactRequestShow({ request, can, urls }: Props) {
                             {request.status === 'handled' ? (
                                 <div className="space-y-2 text-sm">
                                     <p>
-                                        Gestita da <span className="font-medium">{request.handledBy ?? '—'}</span> il {formatDateTime(request.handledAt)}.
+                                        Gestita da <span className="font-medium">{request.handledBy ?? '—'}</span> il{' '}
+                                        {formatDateTime(request.handledAt)}.
                                     </p>
-                                    {request.handlingNote && <p className="rounded-lg bg-canvas px-3 py-2.5 whitespace-pre-line text-fg-muted">{request.handlingNote}</p>}
+                                    {request.handlingNote && (
+                                        <p className="rounded-lg bg-canvas px-3 py-2.5 whitespace-pre-line text-fg-muted">
+                                            {request.handlingNote}
+                                        </p>
+                                    )}
                                 </div>
                             ) : can.manage ? (
                                 <form onSubmit={submit} className="space-y-4" noValidate>
-                                    <Field label="Nota (facoltativa)" error={form.errors.note} hint="Ad esempio come e quando è stato ricontattato il mittente.">
-                                        {(f) => <Textarea id={f.id} aria-describedby={f.describedBy} invalid={f.invalid} rows={3} maxLength={1000} value={form.data.note} onChange={(e) => form.setData('note', e.target.value)} />}
+                                    <Field
+                                        label="Nota (facoltativa)"
+                                        error={form.errors.note}
+                                        hint="Ad esempio come e quando è stato ricontattato il mittente."
+                                    >
+                                        {(f) => (
+                                            <Textarea
+                                                id={f.id}
+                                                aria-describedby={f.describedBy}
+                                                invalid={f.invalid}
+                                                rows={3}
+                                                maxLength={1000}
+                                                value={form.data.note}
+                                                onChange={(e) => form.setData('note', e.target.value)}
+                                            />
+                                        )}
                                     </Field>
-                                    <Button type="submit" loading={form.processing} icon={<CheckCheck className="size-4" aria-hidden />}>
+                                    <Button
+                                        type="submit"
+                                        loading={form.processing}
+                                        icon={<CheckCheck className="size-4" aria-hidden />}
+                                    >
                                         Segna come gestita
                                     </Button>
                                 </form>

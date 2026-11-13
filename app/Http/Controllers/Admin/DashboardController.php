@@ -56,6 +56,7 @@ final class DashboardController extends Controller
                     'id' => $log->id,
                     'occurredAt' => $log->occurred_at->toIso8601String(),
                     'actionLabel' => AuditActions::label($log->action),
+                    'actorType' => $log->actor_type,
                     'actorLabel' => $log->actor_label,
                     'url' => route('admin.audit.show', $log),
                 ]);

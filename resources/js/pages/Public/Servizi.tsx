@@ -8,7 +8,12 @@ import type { PickupSettings } from '@/lib/types';
 
 type Props = {
     seo: Seo;
-    content: { title: string; intro: string; items: { name: string; description: string }[]; ordering: { title: string; text: string } };
+    content: {
+        title: string;
+        intro: string;
+        items: { name: string; description: string }[];
+        ordering: { title: string; text: string };
+    };
     pickup: PickupSettings;
 };
 
@@ -21,7 +26,12 @@ export default function Servizi({ seo, content, pickup }: Props) {
                     {content.items.map((item, index) => (
                         <Reveal as="li" key={index}>
                             <div className="grid gap-4 py-10 md:grid-cols-[6rem_1fr_1.4fr] md:gap-10">
-                                <span className="font-display text-5xl font-semibold text-brand-100 tabular">{String(index + 1).padStart(2, '0')}</span>
+                                <span
+                                    className="tabular font-display text-5xl font-semibold text-brand-400"
+                                    aria-hidden
+                                >
+                                    {String(index + 1).padStart(2, '0')}
+                                </span>
                                 <h2 className="text-2xl font-semibold text-ink">
                                     <Txt value={item.name} />
                                 </h2>
@@ -50,7 +60,10 @@ export default function Servizi({ seo, content, pickup }: Props) {
                                 <span>
                                     <span className="block text-sm font-semibold text-fg">Sede di ritiro</span>
                                     <span className="text-fg-muted">
-                                        <MultilineTxt value={pickup.address} fallback="indirizzo della sede di ritiro" />
+                                        <MultilineTxt
+                                            value={pickup.address}
+                                            fallback="indirizzo della sede di ritiro"
+                                        />
                                     </span>
                                 </span>
                             </p>

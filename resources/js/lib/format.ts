@@ -10,7 +10,12 @@ const dateTimeFormatter = new Intl.DateTimeFormat('it-IT', {
     minute: '2-digit',
 });
 
-const dateFormatter = new Intl.DateTimeFormat('it-IT', { timeZone: TIME_ZONE, day: '2-digit', month: 'long', year: 'numeric' });
+const dateFormatter = new Intl.DateTimeFormat('it-IT', {
+    timeZone: TIME_ZONE,
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+});
 
 const relativeFormatter = new Intl.RelativeTimeFormat('it-IT', { numeric: 'auto' });
 

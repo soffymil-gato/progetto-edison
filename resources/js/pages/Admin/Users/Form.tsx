@@ -33,7 +33,14 @@ type User = {
 type Props = {
     user: User | null;
     assignableRoles: Option[];
-    urls: { submit: string; back: string; suspend?: string; reactivate?: string; invitation?: string; passwordReset?: string };
+    urls: {
+        submit: string;
+        back: string;
+        suspend?: string;
+        reactivate?: string;
+        invitation?: string;
+        passwordReset?: string;
+    };
 };
 
 export default function UserForm({ user, assignableRoles, urls }: Props) {
@@ -58,11 +65,17 @@ export default function UserForm({ user, assignableRoles, urls }: Props) {
             <PageHeader
                 back={{ href: urls.back, label: 'Utenti interni' }}
                 title={editing ? user.name : 'Nuovo utente'}
-                description={editing ? user.email : "L'utente riceverà un invito via email per scegliere la propria password."}
+                description={
+                    editing ? user.email : "L'utente riceverà un invito via email per scegliere la propria password."
+                }
                 actions={editing && <AccountStatusBadge status={user.status} label={user.statusLabel} />}
             />
 
-            {errors.user && <Alert tone="danger" className="mb-6">{errors.user}</Alert>}
+            {errors.user && (
+                <Alert tone="danger" className="mb-6">
+                    {errors.user}
+                </Alert>
+            )}
             {readOnly && (
                 <Alert tone="warning" className="mb-6">
                     Solo un Super Admin può modificare questo utente.
@@ -77,10 +90,23 @@ export default function UserForm({ user, assignableRoles, urls }: Props) {
                             <div className="grid gap-5 sm:grid-cols-2">
                                 <Field label="Nome e cognome" error={form.errors.name} required>
                                     {(f) => (
-                                        <Input id={f.id} aria-describedby={f.describedBy} invalid={f.invalid} value={form.data.name} onChange={(e) => form.setData('name', e.target.value)} disabled={readOnly} required />
+                                        <Input
+                                            id={f.id}
+                                            aria-describedby={f.describedBy}
+                                            invalid={f.invalid}
+                                            value={form.data.name}
+                                            onChange={(e) => form.setData('name', e.target.value)}
+                                            disabled={readOnly}
+                                            required
+                                        />
                                     )}
                                 </Field>
-                                <Field label="Email aziendale" error={form.errors.email} hint={editing ? "L'email non è modificabile." : undefined} required>
+                                <Field
+                                    label="Email aziendale"
+                                    error={form.errors.email}
+                                    hint={editing ? "L'email non è modificabile." : undefined}
+                                    required
+                                >
                                     {(f) => (
                                         <Input
                                             id={f.id}
@@ -99,14 +125,22 @@ export default function UserForm({ user, assignableRoles, urls }: Props) {
 
                             <fieldset>
                                 <legend className="text-sm font-medium text-fg">
-                                    Ruoli <span className="text-danger-600" aria-hidden>*</span>
+                                    Ruoli{' '}
+                                    <span className="text-danger-600" aria-hidden>
+                                        *
+                                    </span>
                                 </legend>
                                 <p className="mt-0.5 text-xs text-fg-subtle">
-                                    {user?.isSelf ? 'Non puoi modificare i tuoi ruoli.' : 'Sono elencati solo i ruoli che hai i privilegi di assegnare.'}
+                                    {user?.isSelf
+                                        ? 'Non puoi modificare i tuoi ruoli.'
+                                        : 'Sono elencati solo i ruoli che hai i privilegi di assegnare.'}
                                 </p>
                                 <div className="mt-3 grid gap-2 sm:grid-cols-2">
                                     {assignableRoles.map((role) => (
-                                        <label key={role.value} className="flex cursor-pointer items-center gap-3 rounded-xl border border-line px-3.5 py-3 transition-colors has-[:checked]:border-brand-300 has-[:checked]:bg-brand-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60">
+                                        <label
+                                            key={role.value}
+                                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-line px-3.5 py-3 transition-colors has-[:checked]:border-brand-300 has-[:checked]:bg-brand-50 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60"
+                                        >
                                             <Checkbox
                                                 checked={form.data.roles.includes(role.value)}
                                                 onChange={(e) => toggleRole(role.value, e.target.checked)}
@@ -125,7 +159,11 @@ export default function UserForm({ user, assignableRoles, urls }: Props) {
 
                             {!readOnly && (
                                 <div className="flex justify-end border-t border-line pt-5">
-                                    <Button type="submit" loading={form.processing} icon={<Save className="size-4" aria-hidden />}>
+                                    <Button
+                                        type="submit"
+                                        loading={form.processing}
+                                        icon={<Save className="size-4" aria-hidden />}
+                                    >
                                         {editing ? 'Salva le modifiche' : 'Crea e invia invito'}
                                     </Button>
                                 </div>
@@ -153,23 +191,39 @@ export default function UserForm({ user, assignableRoles, urls }: Props) {
                                 <CardHeader title="Azioni sull'account" />
                                 <CardBody className="flex flex-col gap-3">
                                     {user.status === 'invited' && (
-                                        <Button variant="secondary" onClick={() => post(urls.invitation)} icon={<MailPlus className="size-4" aria-hidden />}>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => post(urls.invitation)}
+                                            icon={<MailPlus className="size-4" aria-hidden />}
+                                        >
                                             Invia un nuovo invito
                                         </Button>
                                     )}
                                     {user.status === 'active' && (
-                                        <Button variant="secondary" onClick={() => post(urls.passwordReset)} icon={<KeyRound className="size-4" aria-hidden />}>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => post(urls.passwordReset)}
+                                            icon={<KeyRound className="size-4" aria-hidden />}
+                                        >
                                             Invia reset della password
                                         </Button>
                                     )}
                                     {user.status === 'suspended' ? (
-                                        <Button variant="secondary" onClick={() => post(urls.reactivate)} icon={<RotateCcw className="size-4" aria-hidden />}>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => post(urls.reactivate)}
+                                            icon={<RotateCcw className="size-4" aria-hidden />}
+                                        >
                                             Riattiva l'utente
                                         </Button>
                                     ) : (
                                         <ConfirmDialog
                                             trigger={
-                                                <Button variant="secondary" className="text-danger-700 hover:border-danger-600/40 hover:bg-danger-50" icon={<Ban className="size-4" aria-hidden />}>
+                                                <Button
+                                                    variant="secondary"
+                                                    className="text-danger-700 hover:border-danger-600/40 hover:bg-danger-50"
+                                                    icon={<Ban className="size-4" aria-hidden />}
+                                                >
                                                     Sospendi l'utente
                                                 </Button>
                                             }

@@ -59,11 +59,20 @@ export default function Login({ identifierLabel, urls }: Props) {
                     )}
                 </Field>
                 <div className="flex justify-end">
-                    <Link href={urls.forgot} className="text-sm font-medium text-brand-700 hover:text-brand-900 hover:underline">
+                    <Link
+                        href={urls.forgot}
+                        className="text-sm font-medium text-brand-700 hover:text-brand-900 hover:underline"
+                    >
                         Password dimenticata?
                     </Link>
                 </div>
-                <Button type="submit" size="lg" className="w-full" loading={form.processing} icon={<LogIn className="size-4" aria-hidden />}>
+                <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full"
+                    loading={form.processing}
+                    icon={<LogIn className="size-4" aria-hidden />}
+                >
                     Accedi
                 </Button>
             </form>

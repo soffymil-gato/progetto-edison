@@ -11,9 +11,13 @@ export function Pagination<T>({ page, noun = 'risultati' }: { page: Paginated<T>
     const numbered = page.links.slice(1, -1);
 
     return (
-        <nav className="flex flex-col items-center justify-between gap-3 border-t border-line px-5 py-3.5 sm:flex-row" aria-label="Paginazione">
+        <nav
+            className="flex flex-col items-center justify-between gap-3 border-t border-line px-5 py-3.5 sm:flex-row"
+            aria-label="Paginazione"
+        >
             <p className="text-sm text-fg-muted">
-                {formatNumber(page.from ?? 0)}–{formatNumber(page.to ?? 0)} di <span className="font-medium text-fg">{formatNumber(page.total)}</span> {noun}
+                {formatNumber(page.from ?? 0)}–{formatNumber(page.to ?? 0)} di{' '}
+                <span className="font-medium text-fg">{formatNumber(page.total)}</span> {noun}
             </p>
             {page.last_page > 1 && (
                 <div className="flex items-center gap-1">
@@ -34,7 +38,9 @@ export function Pagination<T>({ page, noun = 'risultati' }: { page: Paginated<T>
                                     aria-current={link.active ? 'page' : undefined}
                                     className={cn(
                                         'inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 text-sm font-medium transition-colors',
-                                        link.active ? 'bg-brand-600 text-white' : 'text-fg-muted hover:bg-brand-50 hover:text-brand-800',
+                                        link.active
+                                            ? 'bg-brand-600 text-white'
+                                            : 'text-fg-muted hover:bg-brand-50 hover:text-brand-800',
                                     )}
                                 >
                                     {link.label}
@@ -64,7 +70,12 @@ function PageLink({ href, label, children }: { href: string | null; label: strin
         );
     }
     return (
-        <Link href={href} preserveScroll className={cn(classes, 'hover:border-brand-300 hover:bg-brand-50 hover:text-brand-800')} aria-label={label}>
+        <Link
+            href={href}
+            preserveScroll
+            className={cn(classes, 'hover:border-brand-300 hover:bg-brand-50 hover:text-brand-800')}
+            aria-label={label}
+        >
             {children}
         </Link>
     );

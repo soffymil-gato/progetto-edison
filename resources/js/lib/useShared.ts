@@ -22,7 +22,6 @@ export function useCan(permission: string): boolean {
     return staff?.permissions.includes(permission) ?? false;
 }
 
-
 /** Pure variant usable inside loops. */
 export function routeMatches(current: string | null, pattern: string): boolean {
     if (!current) return false;

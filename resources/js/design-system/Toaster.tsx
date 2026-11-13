@@ -20,12 +20,17 @@ export function Toaster() {
         if (next.length === 0) return;
         // eslint-disable-next-line react-hooks/set-state-in-effect -- flash props arrive with each navigation
         setToasts((current) => [...current, ...next].slice(-3));
-        const timers = next.map((toast) => window.setTimeout(() => setToasts((c) => c.filter((t) => t.id !== toast.id)), 6000));
+        const timers = next.map((toast) =>
+            window.setTimeout(() => setToasts((c) => c.filter((t) => t.id !== toast.id)), 6000),
+        );
         return () => timers.forEach((t) => window.clearTimeout(t));
     }, [flash]);
 
     return (
-        <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex flex-col items-center gap-2 p-4 sm:items-end sm:p-6">
+        <div
+            aria-live="polite"
+            className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex flex-col items-center gap-2 p-4 sm:items-end sm:p-6"
+        >
             {toasts.map((toast) => (
                 <div
                     key={toast.id}

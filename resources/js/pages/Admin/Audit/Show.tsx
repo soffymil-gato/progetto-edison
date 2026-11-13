@@ -23,19 +23,37 @@ type Props = {
 export default function AuditShow({ log, urls }: Props) {
     return (
         <AppShell title={log.actionLabel}>
-            <PageHeader back={{ href: urls.back, label: 'Registro attività' }} eyebrow={`Evento #${log.id}`} title={log.actionLabel} description={formatDateTime(log.occurredAt)} />
+            <PageHeader
+                back={{ href: urls.back, label: 'Registro attività' }}
+                eyebrow={`Evento #${log.id}`}
+                title={log.actionLabel}
+                description={formatDateTime(log.occurredAt)}
+            />
             <div className="grid gap-6 lg:grid-cols-2">
                 <Card>
                     <CardHeader title="Dettagli" />
                     <CardBody className="py-2">
                         <DescriptionList
                             items={[
-                                { term: 'Codice azione', value: <span className="font-mono text-xs">{log.action}</span> },
-                                { term: 'Attore', value: log.actorLabel ?? 'Utente non autenticato' },
+                                {
+                                    term: 'Codice azione',
+                                    value: <span className="font-mono text-xs">{log.action}</span>,
+                                },
+                                {
+                                    term: 'Attore',
+                                    value:
+                                        log.actorLabel ??
+                                        (log.actorType === 'system'
+                                            ? 'Sistema (comando da console)'
+                                            : 'Utente non autenticato'),
+                                },
                                 { term: 'Tipo di attore', value: log.actorType },
                                 { term: 'Risorsa', value: log.subject ?? '—' },
                                 { term: 'Indirizzo IP', value: log.ipAddress ?? '—' },
-                                { term: 'Browser', value: <span className="text-xs text-fg-muted">{log.userAgent ?? '—'}</span> },
+                                {
+                                    term: 'Browser',
+                                    value: <span className="text-xs text-fg-muted">{log.userAgent ?? '—'}</span>,
+                                },
                             ]}
                         />
                     </CardBody>
@@ -44,7 +62,9 @@ export default function AuditShow({ log, urls }: Props) {
                     <CardHeader title="Contesto" description="Dati non sensibili registrati con l'evento." />
                     <CardBody>
                         {log.context ? (
-                            <pre className="overflow-x-auto rounded-xl bg-brand-950 p-4 font-mono text-xs leading-relaxed text-brand-100">{JSON.stringify(log.context, null, 2)}</pre>
+                            <pre className="overflow-x-auto rounded-xl bg-brand-950 p-4 font-mono text-xs leading-relaxed text-brand-100">
+                                {JSON.stringify(log.context, null, 2)}
+                            </pre>
                         ) : (
                             <p className="text-sm text-fg-muted">Nessun dato aggiuntivo.</p>
                         )}

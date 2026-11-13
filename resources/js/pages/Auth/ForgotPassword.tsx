@@ -19,7 +19,10 @@ export default function ForgotPassword({ urls }: Props) {
     };
 
     return (
-        <AuthLayout title="Recupera la password" description="Indica l'email del tuo account: ti invieremo un link per scegliere una nuova password.">
+        <AuthLayout
+            title="Recupera la password"
+            description="Indica l'email del tuo account: ti invieremo un link per scegliere una nuova password."
+        >
             {form.wasSuccessful && (
                 <Alert tone="success" className="mb-6">
                     Se l'indirizzo corrisponde a un account attivo, riceverai a breve un'email con le istruzioni.
@@ -41,11 +44,20 @@ export default function ForgotPassword({ urls }: Props) {
                         />
                     )}
                 </Field>
-                <Button type="submit" size="lg" className="w-full" loading={form.processing} icon={<Send className="size-4" aria-hidden />}>
+                <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full"
+                    loading={form.processing}
+                    icon={<Send className="size-4" aria-hidden />}
+                >
                     Invia il link
                 </Button>
             </form>
-            <Link href={urls.login} className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:underline">
+            <Link
+                href={urls.login}
+                className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-brand-700 hover:underline"
+            >
                 <ArrowLeft className="size-4" aria-hidden />
                 Torna all'accesso
             </Link>

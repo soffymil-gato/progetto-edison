@@ -17,9 +17,21 @@ type Props = {
 
 /** Modules that need the integration with the company SQL Server database. Shown as information, not as buttons. */
 const upcoming = [
-    { icon: Boxes, title: 'Catalogo e listino', text: 'Prodotti, prezzi, IVA e disponibilità letti dal database aziendale.' },
-    { icon: ShoppingCart, title: 'Carrello e ordini', text: 'Ordini confermati al momento dell\'invio, con ritiro in sede.' },
-    { icon: ClipboardList, title: 'Storico e stato ordini', text: 'Confermato, in preparazione, pronto per il ritiro, ritirato.' },
+    {
+        icon: Boxes,
+        title: 'Catalogo e listino',
+        text: 'Prodotti, prezzi, IVA e disponibilità letti dal database aziendale.',
+    },
+    {
+        icon: ShoppingCart,
+        title: 'Carrello e ordini',
+        text: "Ordini confermati al momento dell'invio, con ritiro in sede.",
+    },
+    {
+        icon: ClipboardList,
+        title: 'Storico e stato ordini',
+        text: 'Confermato, in preparazione, pronto per il ritiro, ritirato.',
+    },
     { icon: FileText, title: 'Documenti', text: 'Documenti riservati al tuo account, scaricabili in modo protetto.' },
 ];
 
@@ -30,7 +42,10 @@ export default function Dashboard({ account, pickup, company }: Props) {
     return (
         <AppShell title="Dashboard">
             <section className="relative overflow-hidden rounded-panel bg-brand-950 px-6 py-8 text-white sm:px-10 sm:py-10">
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_100%_0%,rgb(42_111_255/0.45),transparent_60%)]" aria-hidden />
+                <div
+                    className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_20rem_at_100%_0%,rgb(42_111_255/0.45),transparent_60%)]"
+                    aria-hidden
+                />
                 <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                     <div>
                         <p className="text-sm font-medium text-spark-300">Area clienti</p>
@@ -39,7 +54,7 @@ export default function Dashboard({ account, pickup, company }: Props) {
                     </div>
                     <dl className="grid grid-cols-2 gap-x-8 gap-y-1 text-sm">
                         <dt className="text-white/55">Riferimento cliente</dt>
-                        <dd className="font-medium tabular">{account.customerRef}</dd>
+                        <dd className="tabular font-medium">{account.customerRef}</dd>
                         <dt className="text-white/55">{account.username ? 'Nome utente' : 'Email'}</dt>
                         <dd className="truncate font-medium">{account.username ?? account.email}</dd>
                     </dl>
@@ -47,7 +62,8 @@ export default function Dashboard({ account, pickup, company }: Props) {
             </section>
 
             <Alert tone="info" title="Catalogo e ordini in attivazione" className="mt-6">
-                Queste funzioni saranno disponibili dopo il collegamento con il database aziendale. I dati non vengono simulati: fino ad allora qui trovi solo informazioni reali sul tuo account e sul ritiro.
+                Queste funzioni saranno disponibili dopo il collegamento con il database aziendale. I dati non vengono
+                simulati: fino ad allora qui trovi solo informazioni reali sul tuo account e sul ritiro.
             </Alert>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
@@ -56,7 +72,10 @@ export default function Dashboard({ account, pickup, company }: Props) {
                     <CardBody>
                         <ul className="grid gap-4 sm:grid-cols-2">
                             {upcoming.map(({ icon: Icon, title, text }) => (
-                                <li key={title} className="flex gap-3 rounded-xl border border-dashed border-line-strong p-4">
+                                <li
+                                    key={title}
+                                    className="flex gap-3 rounded-xl border border-dashed border-line-strong p-4"
+                                >
                                     <Icon className="mt-0.5 size-5 shrink-0 text-brand-500" aria-hidden />
                                     <div>
                                         <p className="font-medium text-fg">{title}</p>
@@ -80,7 +99,11 @@ export default function Dashboard({ account, pickup, company }: Props) {
                                 <CalendarClock className="mt-0.5 size-4.5 shrink-0 text-brand-600" aria-hidden />
                                 <MultilineTxt value={pickup.hours} fallback="orari di ritiro" />
                             </p>
-                            {pickup.notes && <p className="rounded-lg bg-canvas px-3 py-2.5 whitespace-pre-line text-fg-muted">{pickup.notes}</p>}
+                            {pickup.notes && (
+                                <p className="rounded-lg bg-canvas px-3 py-2.5 whitespace-pre-line text-fg-muted">
+                                    {pickup.notes}
+                                </p>
+                            )}
                         </CardBody>
                     </Card>
 
@@ -89,10 +112,27 @@ export default function Dashboard({ account, pickup, company }: Props) {
                         <CardBody className="space-y-3 text-sm">
                             <p className="flex gap-3">
                                 <Headset className="mt-0.5 size-4.5 shrink-0 text-brand-600" aria-hidden />
-                                <span>
-                                    {company.phone ? <a className="font-medium text-brand-700 hover:underline" href={`tel:${company.phone.replace(/\s+/g, '')}`}>{company.phone}</a> : <Txt value={null} fallback="telefono" />}
-                                    <br />
-                                    {company.email ? <a className="font-medium text-brand-700 hover:underline" href={`mailto:${company.email}`}>{company.email}</a> : <Txt value={null} fallback="email" />}
+                                <span className="flex flex-col items-start gap-1.5">
+                                    {company.phone ? (
+                                        <a
+                                            className="font-medium text-brand-700 hover:underline"
+                                            href={`tel:${company.phone.replace(/\s+/g, '')}`}
+                                        >
+                                            {company.phone}
+                                        </a>
+                                    ) : (
+                                        <Txt value={null} fallback="telefono" />
+                                    )}
+                                    {company.email ? (
+                                        <a
+                                            className="font-medium text-brand-700 hover:underline"
+                                            href={`mailto:${company.email}`}
+                                        >
+                                            {company.email}
+                                        </a>
+                                    ) : (
+                                        <Txt value={null} fallback="email" />
+                                    )}
                                 </span>
                             </p>
                             <p className="pl-7.5 text-fg-muted">
@@ -101,10 +141,16 @@ export default function Dashboard({ account, pickup, company }: Props) {
                         </CardBody>
                     </Card>
 
-                    <Link href={urls.profile ?? '#'} className="group flex items-center gap-3 rounded-card border border-line bg-surface px-5 py-4 shadow-card transition-colors hover:border-brand-300">
+                    <Link
+                        href={urls.profile ?? '#'}
+                        className="group flex items-center gap-3 rounded-card border border-line bg-surface px-5 py-4 shadow-card transition-colors hover:border-brand-300"
+                    >
                         <UserCog className="size-5 text-brand-600" aria-hidden />
                         <span className="flex-1 text-sm font-medium text-fg">Profilo e sicurezza</span>
-                        <span className="text-sm text-brand-700 transition-transform group-hover:translate-x-0.5" aria-hidden>
+                        <span
+                            className="text-sm text-brand-700 transition-transform group-hover:translate-x-0.5"
+                            aria-hidden
+                        >
                             →
                         </span>
                     </Link>
