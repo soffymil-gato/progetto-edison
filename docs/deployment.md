@@ -1,5 +1,7 @@
 # Deployment
 
+> Per l'**anteprima dimostrativa** su Render (SQLite, nessun database aziendale) vedi [`preview.md`](preview.md). Questo documento riguarda staging e produzione.
+
 > **L'infrastruttura di Edison non è ancora nota** (domanda I1 del report): non sappiamo se l'applicazione girerà su Linux/Docker o su Windows Server/IIS. Questo documento descrive i requisiti e i passaggi indipendenti dalla piattaforma. La procedura definitiva va completata quando l'infrastruttura sarà confermata.
 
 ## Ambienti

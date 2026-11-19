@@ -51,6 +51,16 @@ return [
         // Read-only is guaranteed by the database login (SELECT permissions only).
         'legacy' => $sqlsrv('LEGACY_DB', ''),
 
+        // PREVIEW ONLY (EDISON_PREVIEW=true): self-contained SQLite file with
+        // synthetic demo data. Staging and production always use SQL Server.
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'url' => env('DB_URL'),
+            'database' => env('DB_DATABASE', database_path('preview.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => true,
+        ],
+
     ],
 
     'migrations' => [

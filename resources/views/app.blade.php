@@ -44,5 +44,10 @@
 </head>
 <body class="area-{{ $area->value }}">
     @inertia
+    @if (config('edison.preview'))
+        <p class="pointer-events-none fixed bottom-3 left-3 z-40 rounded-full bg-ink/90 px-3 py-1.5 text-xs font-semibold text-white shadow-elevated">
+            Anteprima — dati dimostrativi
+        </p>
+    @endif
 </body>
 </html>

@@ -29,6 +29,11 @@ final class SeoController extends Controller
     {
         $lines = ['User-agent: *'];
 
+        // Demo preview: nothing is indexed.
+        if (config('edison.preview')) {
+            return response("User-agent: *\nDisallow: /\n", 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+        }
+
         // Reserved areas are never indexed (they also send X-Robots-Tag: noindex).
         foreach ([Area::Portal, Area::Admin] as $area) {
             if ($area->domain() === null) {

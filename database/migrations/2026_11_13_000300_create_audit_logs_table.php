@@ -51,6 +51,12 @@ return new class extends Migration
                 END
                 SQL);
         }
+
+        // Preview environment (SQLite): same protection.
+        if (DB::connection()->getDriverName() === 'sqlite') {
+            DB::unprepared("CREATE TRIGGER audit_logs_no_update BEFORE UPDATE ON audit_logs BEGIN SELECT RAISE(ABORT, 'audit_logs is append-only.'); END");
+            DB::unprepared("CREATE TRIGGER audit_logs_no_delete BEFORE DELETE ON audit_logs BEGIN SELECT RAISE(ABORT, 'audit_logs is append-only.'); END");
+        }
     }
 
     public function down(): void

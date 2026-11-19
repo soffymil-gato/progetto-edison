@@ -29,8 +29,8 @@ final class SecurityHeaders
         $headers->set('Cross-Origin-Opener-Policy', 'same-origin');
         $headers->set('Content-Security-Policy', $this->contentSecurityPolicy($nonce));
 
-        // Reserved areas must never be indexed by search engines.
-        if (Area::current() !== Area::Public) {
+        // Reserved areas (and the whole demo preview) must never be indexed.
+        if (Area::current() !== Area::Public || config('edison.preview')) {
             $headers->set('X-Robots-Tag', 'noindex, nofollow');
         }
 

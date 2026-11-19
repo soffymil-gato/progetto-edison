@@ -21,6 +21,14 @@ return [
     | Without a domain the area is served under a path prefix and its cookies
     | are scoped to that path.
     */
+    /*
+    | Demo preview (e.g. Render): SQLite with synthetic data, never indexed by
+    | search engines, clearly labelled as a preview. Never enable in production.
+    */
+    'preview' => (bool) env('EDISON_PREVIEW', false),
+    // Password of the demo accounts created by PreviewSeeder (set in the hosting dashboard).
+    'preview_password' => env('PREVIEW_PASSWORD'),
+
     'areas' => [
         'public' => [
             'domain' => env('EDISON_PUBLIC_DOMAIN'),

@@ -10,6 +10,8 @@ Piattaforma web B2B per Edison, azienda che commercializza prodotti e servizi pe
 
 In produzione ogni area è pensata su un proprio sottodominio (`EDISON_*_DOMAIN`).
 
+**Anteprima online** (senza database aziendale, dati dimostrativi): istruzioni in [`docs/preview.md`](docs/preview.md).
+
 Lo stato dettagliato è in [`docs/stato-avanzamento.md`](docs/stato-avanzamento.md): cosa è realizzato e verificato, cosa è segnaposto, cosa è bloccato.
 
 ## Stack
