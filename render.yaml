@@ -1,0 +1,19 @@
+# Render Blueprint — PREVIEW of the Edison platform (demo data, no company database).
+# Render dashboard: New > Blueprint > select this repository and branch.
+# During set-up Render asks for PREVIEW_PASSWORD (password of the demo accounts).
+services:
+  - type: web
+    name: edison-anteprima
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: claude/inspiring-ritchie-sav3g6
+    dockerfilePath: ./docker/preview/Dockerfile
+    dockerContext: .
+    autoDeploy: true
+    healthCheckPath: /up
+    envVars:
+      - key: APP_KEY
+        generateValue: true
+      - key: PREVIEW_PASSWORD
+        sync: false
