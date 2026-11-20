@@ -33,7 +33,7 @@ export type SharedProps = {
     route: string | null;
     appName: string;
     xsrfCookie: string;
-    brand: { logoUrl: string | null };
+    brand: { logoUrl: string | null; logoNegativeUrl: string | null };
     company: CompanySettings;
     auth: { user: StaffUser | CustomerUser | null };
     nav: NavItem[];

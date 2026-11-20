@@ -73,3 +73,22 @@ it('marks reserved areas as not indexable', function (): void {
     $this->get('/area-clienti/login')->assertHeader('X-Robots-Tag', 'noindex, nofollow');
     expect($this->get('/')->headers->has('X-Robots-Tag'))->toBeFalse();
 });
+
+it('shares the official logo and its negative version once configured', function (): void {
+    config([
+        'edison.brand.logo_path' => 'images/brand/edison-logo.svg',
+        'edison.brand.logo_negative_path' => 'images/brand/edison-logo-negativo.svg',
+    ]);
+
+    $this->get('/')->assertOk()->assertInertia(fn (Assert $page) => $page
+        ->where('brand.logoUrl', asset('images/brand/edison-logo.svg'))
+        ->where('brand.logoNegativeUrl', asset('images/brand/edison-logo-negativo.svg')));
+});
+
+it('falls back to the standard logo without a negative version, and to the placeholder without a logo', function (): void {
+    config(['edison.brand.logo_path' => 'images/brand/edison-logo.svg', 'edison.brand.logo_negative_path' => 'images/brand/assente.svg']);
+    $this->get('/')->assertInertia(fn (Assert $page) => $page->where('brand.logoNegativeUrl', asset('images/brand/edison-logo.svg')));
+
+    config(['edison.brand.logo_path' => '']);
+    $this->get('/')->assertInertia(fn (Assert $page) => $page->where('brand.logoUrl', null)->where('brand.logoNegativeUrl', null));
+});

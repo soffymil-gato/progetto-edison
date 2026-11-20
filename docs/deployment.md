@@ -39,8 +39,9 @@ Il riferimento completo è `.env.example`.
 - `DB_*` con `DB_ENCRYPT=yes` e `DB_TRUST_SERVER_CERTIFICATE=false`;
 - `SESSION_SECURE_COOKIE=true`, `SESSION_ENCRYPT=true`;
 - `TRUSTED_PROXIES`, se c'è un reverse proxy TLS;
-- `MAIL_*` con mittente verificato (SPF/DKIM/DMARC);
-- `EDISON_LOGO_PATH`.
+- `MAIL_*` con mittente verificato (SPF/DKIM/DMARC).
+
+Il logo ufficiale è incluso nel repository (`public/images/brand/`) e usato per impostazione predefinita: `EDISON_LOGO_PATH` e `EDISON_LOGO_NEGATIVE_PATH` servono solo per sostituirlo.
 
 I segreti vanno solo nelle variabili del server o in un secret manager, **mai** nel repository.
 

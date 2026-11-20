@@ -37,9 +37,7 @@ final class HandleInertiaRequests extends Middleware
             'route' => $request->route()?->getName(),
             'appName' => config('app.name'),
             'xsrfCookie' => $area->xsrfCookie(),
-            'brand' => [
-                'logoUrl' => $this->logoUrl(),
-            ],
+            'brand' => $this->brand(),
             'company' => fn (): array => $this->settings->get('company'),
             'auth' => fn (): array => ['user' => $this->user($request, $area)],
             'nav' => fn (): array => Navigation::for($area, $this->account($request, $area)),
@@ -51,10 +49,20 @@ final class HandleInertiaRequests extends Middleware
         ];
     }
 
-    private function logoUrl(): ?string
+    /** @return array{logoUrl: string|null, logoNegativeUrl: string|null} */
+    private function brand(): array
     {
-        $path = config('edison.brand.logo_path');
+        $logo = $this->publicAsset(config('edison.brand.logo_path'));
 
+        return [
+            'logoUrl' => $logo,
+            // Never show the negative version without the official logo.
+            'logoNegativeUrl' => $logo !== null ? ($this->publicAsset(config('edison.brand.logo_negative_path')) ?? $logo) : null,
+        ];
+    }
+
+    private function publicAsset(mixed $path): ?string
+    {
         return is_string($path) && $path !== '' && is_file(public_path($path)) ? asset($path) : null;
     }
 

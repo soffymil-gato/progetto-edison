@@ -76,10 +76,14 @@ return [
     ],
 
     'brand' => [
-        // Path (relative to public/) of the OFFICIAL logo supplied by Edison.
-        // Null = not supplied yet: a clearly marked placeholder is shown and
-        // the release check fails.
-        'logo_path' => env('EDISON_LOGO_PATH'),
+        // Paths (relative to public/) of the OFFICIAL logo supplied by Edison,
+        // exported from the vector original (Edison_Logo_Vettoriale.pdf).
+        // Empty = no logo: a clearly marked placeholder is shown and the
+        // release check fails.
+        'logo_path' => env('EDISON_LOGO_PATH', 'images/brand/edison-logo.svg'),
+        // Negative version for dark backgrounds: same artwork, lettering in
+        // white. Falls back to the standard logo when missing.
+        'logo_negative_path' => env('EDISON_LOGO_NEGATIVE_PATH', 'images/brand/edison-logo-negativo.svg'),
     ],
 
     'content' => [

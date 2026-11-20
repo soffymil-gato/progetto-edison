@@ -35,7 +35,7 @@ export function AuthLayout({
                         aria-hidden
                     />
                     <div className="relative">
-                        <BrandMark tone="light" />
+                        <BrandMark tone="light" className="h-14" />
                     </div>
                     <div className="relative max-w-md">
                         <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-spark-300 backdrop-blur">

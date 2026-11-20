@@ -1,15 +1,31 @@
 import { cn } from '@/lib/cn';
 import { useShared } from '@/lib/useShared';
 
+/** Proportions of the official artwork (viewBox of the SVG files). */
+const LOGO_WIDTH = 783;
+const LOGO_HEIGHT = 252;
+
 /**
- * Official Edison logo when supplied (EDISON_LOGO_PATH). Until then a neutral,
- * clearly marked placeholder: the brand is never redrawn or imitated.
+ * Official Edison logo (EDISON_LOGO_PATH), in its negative version on dark
+ * backgrounds (EDISON_LOGO_NEGATIVE_PATH). Without it a neutral, clearly
+ * marked placeholder: the brand is never redrawn or imitated.
+ *
+ * Size it through the height (`className="h-12"`); the width follows.
  */
 export function BrandMark({ tone = 'dark', className }: { tone?: 'dark' | 'light'; className?: string }) {
     const { brand, appName } = useShared();
+    const src = tone === 'light' ? (brand.logoNegativeUrl ?? brand.logoUrl) : brand.logoUrl;
 
-    if (brand.logoUrl) {
-        return <img src={brand.logoUrl} alt={appName} className={cn('h-8 w-auto', className)} />;
+    if (src) {
+        return (
+            <img
+                src={src}
+                alt={appName}
+                width={LOGO_WIDTH}
+                height={LOGO_HEIGHT}
+                className={cn('block h-10 w-auto max-w-none', className)}
+            />
+        );
     }
 
     return (

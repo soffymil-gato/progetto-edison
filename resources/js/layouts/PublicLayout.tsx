@@ -64,7 +64,13 @@ export function PublicLayout({
                     )}
                 >
                     <Link href={urls.home ?? '/'} className="shrink-0 rounded-lg" aria-label="Torna alla home">
-                        <BrandMark tone={overHero ? 'light' : 'dark'} />
+                        <BrandMark
+                            tone={overHero ? 'light' : 'dark'}
+                            className={cn(
+                                'transition-[height] duration-300',
+                                scrolled ? 'h-10' : 'h-10 sm:h-12 lg:h-14',
+                            )}
+                        />
                     </Link>
 
                     <nav aria-label="Navigazione principale" className="hidden lg:block">
@@ -208,7 +214,7 @@ function Footer() {
             <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6 lg:px-8">
                 <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
                     <div className="max-w-sm">
-                        <BrandMark tone="light" />
+                        <BrandMark tone="light" className="h-14" />
                         <p className="mt-5 text-sm leading-relaxed text-white/70">
                             <Txt
                                 value={company.short_description}

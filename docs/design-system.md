@@ -25,7 +25,7 @@ Fonte unica dei token: `resources/css/app.css` (blocco `@theme` di Tailwind CSS 
   - `DataTable` gestisce ordinamento lato server, skeleton durante il caricamento e card su smartphone, con link accessibili al dettaglio.
 - **Feedback:** `Toaster`, per i messaggi del server.
 - **Marchio e segnaposto:**
-  - `BrandMark` mostra il logo ufficiale, oppure un segnaposto dichiarato finché il logo non è fornito;
+  - `BrandMark` mostra il logo ufficiale (`public/images/brand/`), a colori su sfondi chiari e in negativo (`tone="light"`) su sfondi scuri; l'altezza si imposta con `className` (predefinita `h-10`), la larghezza segue. Se il logo non è configurato mostra un segnaposto dichiarato;
   - `Txt`, `MultilineTxt` e `PlaceholderChip` rendono sempre visibili i contenuti «da fornire».
 
 ## Layout
