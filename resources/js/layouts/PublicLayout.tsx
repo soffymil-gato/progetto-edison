@@ -107,7 +107,9 @@ export function PublicLayout({
                             external
                             variant={overHero ? 'inverse' : 'primary'}
                             size="sm"
-                            className="hidden sm:inline-flex"
+                            // Below `sm` the entry point lives in the mobile menu. `max-sm:hidden`, not
+                            // `hidden sm:inline-flex`: cn() does not drop the base `inline-flex`.
+                            className="max-sm:hidden"
                             icon={<Lock className="size-3.5" aria-hidden />}
                         >
                             Area clienti

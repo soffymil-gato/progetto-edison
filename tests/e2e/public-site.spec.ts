@@ -13,16 +13,54 @@ const pages = [
 ];
 
 for (const { path, heading } of pages) {
-    test(`pagina ${path}: contenuto, accessibilità e layout`, async ({ page }) => {
+    test(`pagina ${path}: contenuto, accessibilità e layout`, async ({ page, isMobile }) => {
         const errors = trackErrors(page);
         await page.goto(path);
         await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Area clienti' }).first()).toBeVisible();
+
+        const headerLink = page.getByRole('banner').getByRole('link', { name: 'Area clienti' });
+        if (isMobile) {
+            // On phones the header button is hidden: the entry point is in the menu.
+            await expect(headerLink).toBeHidden();
+            await page.getByRole('button', { name: 'Apri il menu' }).click();
+            await expect(page.getByRole('dialog').getByRole('link', { name: 'Area clienti' })).toBeVisible();
+            await page.keyboard.press('Escape');
+            await expect(page.getByRole('dialog')).toBeHidden();
+        } else {
+            await expect(headerLink).toBeVisible();
+        }
+
         await expectNoHorizontalScroll(page);
         await expectAccessible(page);
         expect(errors).toEqual([]);
     });
 }
+
+// The header is fixed, so overflow there does not show up as horizontal scroll.
+test("l'intestazione sta nello schermo anche sui telefoni stretti", async ({ page }) => {
+    for (const width of [320, 360, 412]) {
+        await test.step(`${width}px`, async () => {
+            await page.setViewportSize({ width, height: 800 });
+            await page.goto('/');
+            const menuButton = page.getByRole('banner').getByRole('button', { name: 'Apri il menu' });
+            await expect(menuButton).toBeVisible();
+            const outside = await page
+                .getByRole('banner')
+                .locator('a, button, img, [role="img"]')
+                .evaluateAll((elements) =>
+                    elements
+                        .filter((el) => el.checkVisibility())
+                        .map((el) => ({ el, box: el.getBoundingClientRect() }))
+                        .filter(({ box }) => box.left < 0 || box.right > window.innerWidth)
+                        .map(
+                            ({ el, box }) =>
+                                `${el.getAttribute('aria-label') ?? el.textContent}: ${box.left}–${box.right}`,
+                        ),
+                );
+            expect(outside).toEqual([]);
+        });
+    }
+});
 
 test('i contenuti mancanti sono marcati in modo visibile', async ({ page }) => {
     await page.goto('/');
